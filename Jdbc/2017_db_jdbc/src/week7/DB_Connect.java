@@ -1,0 +1,66 @@
+package week7;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+
+public class DB_Connect {
+	private String username="jisung";
+	private String password="0920";
+	private static Connection dbTest;
+	DB_Connect(){
+		connectDB();
+	}
+	
+	private void connectDB(){
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			dbTest = DriverManager.getConnection(
+					"jdbc:oracle:thin:@localhost:1521:XE"
+					, username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void execute_query1() throws SQLException{
+		String sqlStr = "SELECT avg(speed) FROM pc";
+		PreparedStatement stmt = dbTest.prepareStatement(sqlStr); 
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			System.out.println("avg(speed): "+rs.getString("avg(speed)")); 
+			} 
+		rs.close(); 
+		stmt.close();
+
+	}
+	public void execute_query2() throws SQLException{
+		String sqlStr = "SELECT price FROM pc WHERE price>=2000";
+		PreparedStatement stmt = dbTest.prepareStatement(sqlStr); 
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next())
+			System.out.println("price: "+rs.getString("price")); 
+			
+		rs.close(); 
+		stmt.close();
+
+	}
+	public void execute_query3() throws SQLException{
+		String sqlStr = "SELECT model,speed,hd FROM pc WHERE (cd='8x' or cd='6x') and price<2000";
+		PreparedStatement stmt = dbTest.prepareStatement(sqlStr); 
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			System.out.println("model: "+rs.getString("model")+"  speed: "+rs.getString("speed")+"   hd: "+rs.getString("hd")); 
+
+			} 
+		rs.close(); 
+		stmt.close();
+
+	}
+
+
+}
