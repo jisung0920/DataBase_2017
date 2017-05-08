@@ -1,0 +1,45 @@
+package week8;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+
+public class DB_Connect {
+	private String username="jisung";
+	private String password="0920";
+	private static Connection dbTest;
+	DB_Connect(){
+		connectDB();
+	}
+	
+	private void connectDB(){
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			dbTest = DriverManager.getConnection(
+					"jdbc:oracle:thin:@localhost:1521:XE"
+					, username, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void query1() throws SQLException{
+		String sqlStr = "SELECT maker,model,price FROM pc natural join product"
+				+ " where cd='8x' and ram>=24";
+		PreparedStatement stmt = dbTest.prepareStatement(sqlStr); 
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			System.out.println(rs.getString("maker"+"model")); 
+			System.out.println(rs.getString("model")); 
+			} 
+		rs.close(); 
+		stmt.close();
+
+	}
+	
+
+}
