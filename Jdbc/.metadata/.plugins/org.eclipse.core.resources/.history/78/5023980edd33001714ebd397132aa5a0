@@ -1,0 +1,28 @@
+package week8;
+
+import java.sql.SQLException;
+
+
+public class Main {
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("컴퓨터 공학과 13학번 정지성\n");
+		DB_Connect d1 = new DB_Connect();
+		try{
+			d1.query1();
+			d1.query2();
+			d1.query3();
+			d1.query4();
+			d1.query5();
+			d1.query6();
+			d1.query7();
+		}catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("SQLException"+e);			
+			}
+	}
+}
+
+
